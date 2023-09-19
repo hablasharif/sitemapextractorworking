@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Sitemap URL Extractor</title>
+</head>
+<body>
+    <h1>Sitemap URL Extractor</h1>
+    <form method="POST">
+        <label for="domain">Enter a domain:</label>
+        <input type="text" name="domain" required>
+        <button type="submit">Extract URLs</button>
+    </form>
+
+    {% if total_urls %}
+        <p>Total URLs: {{ total_urls }}</p>
+        <button onclick="copyToClipboard()">Copy All URLs</button>
+
+        <ul>
+            {% for url in url_list %}
+                <li><a href="{{ url }}" target="_blank">{{ url }}</a></li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+
+    {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            <div>
+                {% for message in messages %}
+                    <p style="color: red;">{{ message }}</p>
+                {% endfor %}
+            </div>
+        {% endif %}
+    {% endwith %}
+
+    <script>
+        function copyToClipboard() {
+            var textToCopy = "{{ '\n'.join(url_list) }}";  // Concatenate URLs with line breaks
+            navigator.clipboard.writeText(textToCopy).then(function() {
+                alert("URLs copied to clipboard!");
+            }).catch(function() {
+                alert("Failed to copy URLs to clipboard.");
+            });
+        }
+    </script>
+</body>
+</html>
