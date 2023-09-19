@@ -1,4 +1,7 @@
-flasks
-urllib
-bs4
 requests
+Flask
+beautifulsoup4
+bs4
+urllib3
+gunicorn
+lxml
